@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-arm64-openssl-1.1.x", "linux-arm64-openssl-3.0.x", "debian-openssl-1.1.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("PRISMA_DATABASE_URL")
+}
+
+model group {
+  id           Int            @id @default(autoincrement())
+  name         String
+  code         String
+  users        user[]
+  meetings     meeting[]
+  group_leader group_leader[]
+}
+
+model user {
+  id           Int                  @id @default(autoincrement())
+  name         String
+  email        String               @unique
+  password     String
+  whatsapp     String
+  birthday     DateTime
+  is_admin     Boolean
+  group_id     Int
+  group        group                @relation(fields: [group_id], references: [id])
+  attendance   meeting_attendance[]
+  group_leader group_leader[]
+}
+
+model meeting {
+  id         Int                  @id @default(autoincrement())
+  name       String
+  date       DateTime
+  theme      String
+  analysis   String
+  group_id   Int
+  group      group                @relation(fields: [group_id], references: [id])
+  content    meeting_content[]
+  attendance meeting_attendance[]
+}
+
+model meeting_content {
+  id         Int     @id @default(autoincrement())
+  name       String
+  type       String
+  link       String
+  meeting_id Int
+  meeting    meeting @relation(fields: [meeting_id], references: [id])
+}
+
+model meeting_attendance {
+  id              Int     @id @default(autoincrement())
+  attendance_type String
+  absence_reason  String
+  meeting_id      Int
+  meeting         meeting @relation(fields: [meeting_id], references: [id])
+  user_id         Int
+  user            user    @relation(fields: [user_id], references: [id])
+}
+
+model group_leader {
+  user_id  Int
+  user     user  @relation(fields: [user_id], references: [id])
+  group_id Int
+  group    group @relation(fields: [group_id], references: [id])
+
+  @@id([user_id, group_id])
+  @@index([user_id, group_id])
+}
