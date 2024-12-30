@@ -29,25 +29,18 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
         email: true,
         id: true,
         name: true,
-        securePin: true,
-        isAdmin: true,
-        instituteId: true,
-        courseId: true,
-        institute: true,
-        userVersion: true,
-        isBlocked: true,
-        university: true,
-        universityId: true,
+        secure_pin: true,
+        is_admin: true,
       },
     })
 
     if (!user) return res.status(401).send({ title: 'Erro de Autorização', message: 'Usuário não Existe' })
 
-    if (user.securePin !== tokenData.securePin)
+    if (user.secure_pin !== tokenData.securePin)
       return res.status(401).send({ title: 'Erro de Autorização', message: 'Usuário Impedido de Fazer Login' })
 
     // @ts-ignore
-    delete user.securePin
+    delete user.secure_pin
 
     // @ts-ignore
     req.user = user

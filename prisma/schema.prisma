@@ -13,8 +13,8 @@ datasource db {
 
 model group {
   id           Int            @id @default(autoincrement())
-  name         String
-  code         String
+  name         String         @unique
+  code         String         @unique
   users        user[]
   meetings     meeting[]
   group_leader group_leader[]
@@ -27,9 +27,10 @@ model user {
   password     String
   whatsapp     String
   birthday     DateTime
-  is_admin     Boolean
-  group_id     Int
-  group        group                @relation(fields: [group_id], references: [id])
+  is_admin     Boolean              @default(false)
+  secure_pin   String               @default("1234")
+  group_id     Int?
+  group        group?               @relation(fields: [group_id], references: [id])
   attendance   meeting_attendance[]
   group_leader group_leader[]
 }
