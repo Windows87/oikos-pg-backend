@@ -36,15 +36,16 @@ model user {
 }
 
 model meeting {
-  id         Int                  @id @default(autoincrement())
-  name       String
-  date       DateTime
-  theme      String
-  analysis   String
-  group_id   Int
-  group      group                @relation(fields: [group_id], references: [id])
-  content    meeting_content[]
-  attendance meeting_attendance[]
+  id          Int                  @id @default(autoincrement())
+  name        String
+  date        DateTime
+  theme       String
+  analysis    String?
+  group_id    Int
+  canceled_at DateTime?
+  group       group                @relation(fields: [group_id], references: [id])
+  content     meeting_content[]
+  attendance  meeting_attendance[]
 }
 
 model meeting_content {
@@ -59,7 +60,7 @@ model meeting_content {
 model meeting_attendance {
   id              Int     @id @default(autoincrement())
   attendance_type String
-  absence_reason  String
+  absence_reason  String?
   meeting_id      Int
   meeting         meeting @relation(fields: [meeting_id], references: [id])
   user_id         Int

@@ -30,6 +30,7 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
         id: true,
         name: true,
         secure_pin: true,
+        group_id: true,
         is_admin: true,
       },
     })
