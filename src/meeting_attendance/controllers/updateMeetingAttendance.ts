@@ -8,9 +8,10 @@ const updateMeetingAttendance = async (req: Request, res: Response) => {
   const { id } = req.params
 
   try {
+    const meetingAttendance = await prisma.meeting_attendance.findUnique({ where: { id: Number(id) } })
     const userLeaderGroup = await prisma.group_leader.findFirst({ where: { user_id: user?.id } })
 
-    if (!userLeaderGroup)
+    if (!userLeaderGroup && meetingAttendance?.user_id !== user?.id)
       return res.status(403).send({ title: 'Erro de Autorização', message: 'Usuário não é líder de PG' })
 
     await prisma.meeting_attendance.update({
