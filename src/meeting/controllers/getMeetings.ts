@@ -19,6 +19,7 @@ const getMeetings = async (req: Request, res: Response) => {
           content: true,
           attendance: {
             select: {
+              id: true,
               user: {
                 select: {
                   id: true,
@@ -27,6 +28,9 @@ const getMeetings = async (req: Request, res: Response) => {
                 },
               },
               attendance_type: true,
+              absence_reason: true,
+              visitor_name: true,
+              visitor_whatsapp: true,
             },
           },
         },
