@@ -28,7 +28,7 @@ const register = async (req: Request, res: Response) => {
 
     const token = createToken(user.id, user.secure_pin)
 
-    res.send({ user, token })
+    res.send({ token })
   } catch (error: any) {
     console.error(`[ERROR] [Register User] Unexpected Error: ${error.message}`)
     res.status(500).send({
