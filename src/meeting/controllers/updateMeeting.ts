@@ -23,6 +23,7 @@ const updateMeeting = async (req: Request, res: Response) => {
         name: body.name,
         date: body.date,
         theme: body.theme,
+        analysis: body.analysis,
       },
     })
 
