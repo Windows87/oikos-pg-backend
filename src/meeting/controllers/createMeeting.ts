@@ -36,7 +36,7 @@ const createMeeting = async (req: Request, res: Response) => {
         data: {
           name: content.name,
           type: content.type,
-          link: content.type,
+          link: content.link,
           meeting_id: meeting.id,
         },
       })
