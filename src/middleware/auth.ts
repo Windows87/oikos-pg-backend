@@ -32,6 +32,12 @@ const auth = async (req: Request, res: Response, next: NextFunction) => {
         secure_pin: true,
         group_id: true,
         is_admin: true,
+        group: {
+          select: {
+            name: true,
+            code: true,
+          },
+        },
       },
     })
 

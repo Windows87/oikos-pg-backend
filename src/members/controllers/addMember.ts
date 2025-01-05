@@ -4,7 +4,7 @@ import prisma from '../../db'
 const addMember = async (req: Request, res: Response) => {
   // @ts-ignore
   const { user } = req
-  const { user_id } = req.body
+  const { whatsapp } = req.body
 
   if (!user?.group_id)
     return res.status(403).send({ title: 'Erro de Autorização', message: 'Usuário não está em um PG' })
@@ -15,8 +15,12 @@ const addMember = async (req: Request, res: Response) => {
     if (!userLeaderGroup)
       return res.status(403).send({ title: 'Erro de Autorização', message: 'Usuário não é líder de PG' })
 
+    const member = await prisma.user.findUnique({ where: { whatsapp } })
+
+    if (!member) return res.status(404).send({ title: 'Usuário não encontrado', message: 'Usuário não encontrado' })
+
     await prisma.user.update({
-      where: { id: user_id },
+      where: { whatsapp },
       data: { group_id: userLeaderGroup.group_id },
     })
 

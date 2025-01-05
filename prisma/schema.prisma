@@ -25,7 +25,7 @@ model user {
   name         String
   email        String               @unique
   password     String
-  whatsapp     String
+  whatsapp     String               @unique
   birthday     DateTime
   is_admin     Boolean              @default(false)
   secure_pin   String               @default("1234")
