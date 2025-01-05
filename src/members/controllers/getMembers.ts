@@ -21,6 +21,15 @@ const getMembers = async (req: Request, res: Response) => {
         email: true,
         whatsapp: true,
         birthday: true,
+        attendance: {
+          select: {
+            id: true,
+            attendance_type: true,
+            meeting: { select: { id: true, name: true, date: true, group_id: true } },
+          },
+          where: { meeting: { group_id: userLeaderGroup.group_id } },
+          orderBy: { meeting: { date: 'desc' } },
+        },
       },
       where: { group_id: userLeaderGroup.group_id },
       orderBy: { name: 'asc' },
