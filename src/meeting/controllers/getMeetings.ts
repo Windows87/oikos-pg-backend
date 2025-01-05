@@ -40,7 +40,17 @@ const getMeetings = async (req: Request, res: Response) => {
     } else {
       meetings = await prisma.meeting.findMany({
         where: { group_id: user?.group_id! },
-        include: { content: true },
+        include: {
+          content: true,
+          attendance: {
+            select: {
+              id: true,
+              attendance_type: true,
+              absence_reason: true,
+            },
+            where: { user_id: user?.id! },
+          },
+        },
         orderBy: { date: 'desc' },
       })
     }
