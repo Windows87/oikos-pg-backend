@@ -27,7 +27,7 @@ const getMembers = async (req: Request, res: Response) => {
             attendance_type: true,
             meeting: { select: { id: true, name: true, date: true, group_id: true } },
           },
-          where: { meeting: { group_id: userLeaderGroup.group_id } },
+          where: { meeting: { group_id: userLeaderGroup.group_id, canceled_at: null } },
           orderBy: { meeting: { date: 'desc' } },
         },
       },
