@@ -14,7 +14,7 @@ const getMeetings = async (req: Request, res: Response) => {
     const userLeaderGroup = await prisma.group_leader.findFirst({ where: { user_id: user?.id } })
     if (userLeaderGroup) {
       meetings = await prisma.meeting.findMany({
-        where: { group_id: userLeaderGroup.group_id },
+        where: { group_id: userLeaderGroup.group_id, canceled_at: null },
         include: {
           content: true,
           attendance: {
@@ -39,7 +39,7 @@ const getMeetings = async (req: Request, res: Response) => {
       return res.send(meetings)
     } else {
       meetings = await prisma.meeting.findMany({
-        where: { group_id: user?.group_id! },
+        where: { group_id: user?.group_id!, canceled_at: null },
         include: {
           content: true,
           attendance: {
