@@ -26,6 +26,11 @@ const addMeetingAttendance = async (req: Request, res: Response) => {
         meeting_id: Number(meeting_id),
         attendance_type: 'Não Preenchido',
       },
+      include: {
+        user: {
+          select: { name: true, email: true, id: true },
+        },
+      },
     })
 
     return res.send(meetingAttendance)
