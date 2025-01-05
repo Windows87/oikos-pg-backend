@@ -18,7 +18,7 @@ const addMeetingAttendanceVisitor = async (req: Request, res: Response) => {
         visitor_name,
         visitor_whatsapp,
         meeting_id: Number(meeting_id),
-        attendance_type: 'Presente',
+        attendance_type: 'Visitante',
       },
     })
 
